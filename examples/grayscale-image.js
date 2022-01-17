@@ -1,22 +1,18 @@
-/**
- * Passing grayscale image through canvas.  Image should remain a gray square.
- * If image is distorted with lines, then grayscale images are being distorted.
- */
-var Canvas = require('../lib/canvas')
-  , Image = Canvas.Image
-  , canvas = new Canvas(288, 288)
-  , ctx = canvas.getContext('2d')
-  , fs = require('fs');
+const fs = require('fs')
+const path = require('path')
+const Canvas = require('..')
 
-var grayScaleImage = fs.readFileSync(__dirname + '/images/grayscaleImage.jpg');
-img = new Image;
-img.src = grayScaleImage;
+const Image = Canvas.Image
+const canvas = Canvas.createCanvas(288, 288)
+const ctx = canvas.getContext('2d')
 
-ctx.drawImage(img, 0, 0);
+const img = new Image()
+img.onload = () => {
+  ctx.drawImage(img, 0, 0)
+  canvas.createJPEGStream().pipe(fs.createWriteStream(path.join(__dirname, 'passedThroughGrayscale.jpg')))
+}
+img.onerror = err => {
+  throw err
+}
 
-var out = fs.createWriteStream(__dirname + '/passedThroughGrayscale.jpg')
-  , stream = canvas.createJPEGStream();
-
-stream.on('data', function(chunk){
-  out.write(chunk);
-});
+img.src = path.join(__dirname, 'images', 'grayscaleImage.jpg')
