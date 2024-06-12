@@ -24,7 +24,7 @@ jobs:
   Linux:
     strategy:
       matrix:
-        node: [8, 9, 10, 11, 12, 13, 14]
+        node: [18.12.0, 20.9.0]
         canvas_tag: [] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, Linux
     runs-on: ubuntu-latest
@@ -33,11 +33,11 @@ jobs:
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: ${{ matrix.canvas_tag }}
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
@@ -97,18 +97,18 @@ jobs:
   macOS:
     strategy:
       matrix:
-        node: [8, 9, 10, 11, 12, 13, 14]
+        node: [18.12.0, 20.9.0]
         canvas_tag: [] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, macOS
     runs-on: macos-latest
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: ${{ matrix.canvas_tag }}
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
@@ -163,7 +163,7 @@ jobs:
   Win:
     strategy:
       matrix:
-        node: [8, 9, 10, 11, 12, 13, 14]
+        node: [18.12.0, 20.9.0]
         canvas_tag: [] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, Windows
     runs-on: windows-latest
@@ -176,11 +176,11 @@ jobs:
           update: true
           path-type: inherit
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: ${{ matrix.canvas_tag }}
 
